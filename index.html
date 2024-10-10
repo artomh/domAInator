@@ -67,6 +67,10 @@
 
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
+      <div id="spinner" class="mt-4" style="display: none">
+        <div class="spinner-border" role="status"></div>
+        <span class="sr-only">Loading...</span>
+      </div>
       <div id="responseContainer" class="mt-4"></div>
     </div>
 
@@ -81,6 +85,10 @@
         .getElementById("domainForm")
         .addEventListener("submit", function (event) {
           event.preventDefault();
+          let responseContainer = document.getElementById("responseContainer");
+          responseContainer.innerHTML = ""; // Clear previous response
+          const spinner = document.getElementById("spinner");
+          spinner.style.display = "block"; // Show spinner
           const description =
             document.getElementById("domainDescription").value;
           const tld = document.getElementById("domainTld").value;
@@ -139,6 +147,9 @@
               document.getElementById(
                 "responseContainer"
               ).innerHTML = `<div class="alert alert-danger">An error occurred: ${error.message}</div>`;
+            })
+            .finally(() => {
+              spinner.style.display = "none"; // Hide spinner
             });
         });
       // Hide taken domains. Taken domain rows have a name attribute set to "takenDomainsRow"
