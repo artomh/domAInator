@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Domain Name Description</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="mb-4">Describe Your Desired Domain Name</h1>
+      <form id="domainForm">
+        <div class="mb-3">
+          <label for="domainDescription" class="form-label"
+            >Domain Description</label
+          >
+          <textarea
+            class="form-control"
+            id="domainDescription"
+            rows="3"
+            required
+          ></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="domainTld" class="form-label mb-0"
+            >Top-Level Domain</label
+          >
+          <select class="form-select" id="domainTld">
+            <option value=".com">.com</option>
+            <option value=".net">.net</option>
+            <option value=".org">.org</option>
+            <option value=".ai">.ai</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="domainLength" class="form-label mb-0"
+            >Domain Length (5-20)</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="domainLength"
+            value="10"
+            min="5"
+            max="20"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="domainCount" class="form-label mb-0"
+            >Number of Domains (1-100)</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="domainCount"
+            value="10"
+            min="1"
+            max="100"
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      <div id="responseContainer" class="mt-4"></div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      document
+        .getElementById("domainForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          const description =
+            document.getElementById("domainDescription").value;
+          const tld = document.getElementById("domainTld").value;
+          const length = document.getElementById("domainLength").value;
+          const count = document.getElementById("domainCount").value;
+          fetch("http://localhost:3000/domaingen", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              description: description,
+              tld: tld,
+              length: length,
+              count: count,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              let responseContainer =
+                document.getElementById("responseContainer");
+              responseContainer.innerHTML = `<div class="alert alert-success">${data.message}</div>
+              <div class="mt-3">
+                <h5>Generated Domain Names</h5>
+                <div class="mt-3 mb-3">
+                  <input class="form-check-input" type="checkbox" value="" id="hideTakenDomains">
+                  <label class="form-check-label" for="hideTakenDomains">
+                     Show only available domains
+                  </label>
+                </div>`;
+              let tbl = document.createElement("table");
+              let tblBody = document.createElement("tbody");
+              for (const entry in data.data) {
+                let row = document.createElement("tr");
+                let cell = document.createElement("td");
+                let cellText = document.createTextNode(entry);
+                cell.appendChild(cellText);
+                row.appendChild(cell);
+                cell = document.createElement("td");
+                cellText = document.createTextNode(data.data[entry]);
+                if (data.data[entry] === "Available") {
+                  cell.setAttribute("class", "text-success");
+                } else {
+                  cell.setAttribute("class", "text-danger");
+                  row.setAttribute("name", "takenDomainsRow");
+                }
+                cell.appendChild(cellText);
+                row.appendChild(cell);
+                tblBody.appendChild(row);
+              }
+              tbl.appendChild(tblBody);
+              responseContainer.appendChild(tbl);
+              tbl.setAttribute("class", "table table-striped");
+            })
+            .catch((error) => {
+              document.getElementById(
+                "responseContainer"
+              ).innerHTML = `<div class="alert alert-danger">An error occurred: ${error.message}</div>`;
+            });
+        });
+      // Hide taken domains. Taken domain rows have a name attribute set to "takenDomainsRow"
+      document
+        .getElementById("responseContainer")
+        .addEventListener("change", function (event) {
+          if (event.target.id === "hideTakenDomains") {
+            let takenDomainsRows =
+              document.getElementsByName("takenDomainsRow");
+            for (let i = 0; i < takenDomainsRows.length; i++) {
+              if (event.target.checked) {
+                takenDomainsRows[i].style.display = "none";
+              } else {
+                takenDomainsRows[i].style.display = "";
+              }
+            }
+          }
+        });
+    </script>
+  </body>
+</html>

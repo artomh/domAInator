@@ -1,0 +1,22 @@
+{
+  "name": "domainator",
+  "version": "1.0.0",
+  "description": "AI Based Domain Name Generator",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "nodemon": "^3.1.7",
+    "openai": "^4.67.3",
+    "whoiser": "^1.18.0"
+  }
+}
