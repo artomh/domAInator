@@ -94,7 +94,7 @@
           const tld = document.getElementById("domainTld").value;
           const length = document.getElementById("domainLength").value;
           const count = document.getElementById("domainCount").value;
-          fetch("http://localhost:3000/domaingen", {
+          fetch("/domaingen", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
