@@ -1,9 +1,9 @@
-// Import necessary module using ES6 syntax
-import express from "express";
-import cors from "cors";
-import "dotenv/config";
-import OpenAI from "openai";
-import whoiser from "whoiser";
+// Description: This file contains the code for the backend server that will handle the API requests from the frontend.
+const express = require("express");
+const cors = require("cors");
+const OpenAI = require("openai");
+const whoiser = require("whoiser");
+require("dotenv").config();
 
 // Initialize Express app
 const app = express();
