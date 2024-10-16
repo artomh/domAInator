@@ -18,7 +18,7 @@ const openai = new OpenAI({
 });
 
 app.get("/", function (req, res) {
-  res.sendFile("index.html", { root: "." });
+  res.sendFile("main.html", { root: "." });
 });
 
 // Define a single POST route
