@@ -65,7 +65,7 @@ app.post("/domaingen", async (req, res) => {
   }
 });
 
-// Start the server
+// Start the server with appropriate port
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
 });
