@@ -17,6 +17,10 @@ const openai = new OpenAI({
   project: process.env.OPENAI_PROJECT_ID,
 });
 
+app.get("/", function (req, res) {
+  res.sendFile("index.html", { root: "." });
+});
+
 // Define a single POST route
 app.post("/domaingen", async (req, res) => {
   const description = req.body.description;
