@@ -23,76 +23,136 @@
       </div>
     </nav>
     <div class="container mt-5">
-      <h1 class="mb-4">Describe Your Desired Domain Name</h1>
-      <form id="domainForm">
-        <div class="mb-3">
-          <label for="domainDescription" class="form-label"
-            >Domain Description</label
+      <!-- Create 2 tabs -->
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="domaingen-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#domaingen"
+            type="button"
+            role="tab"
+            aria-controls="domaingen"
+            aria-selected="true"
           >
-          <textarea
-            class="form-control"
-            id="domainDescription"
-            rows="3"
-            required
-          ></textarea>
-        </div>
-        <div class="mb-3">
-          <label for="domainTld" class="form-label mb-0"
-            >Top-Level Domain</label
+            Generage Domain Names 🤖
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="verify-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#verify"
+            type="button"
+            role="tab"
+            aria-controls="verify"
+            aria-selected="false"
           >
-          <select class="form-select" id="domainTld">
-            <option value=".com">.com</option>
-            <option value=".net">.net</option>
-            <option value=".org">.org</option>
-            <option value=".info">.info</option>
-            <option value=".biz">.biz</option>
-            <option value=".us">.us</option>
-            <option value=".ca">.ca</option>
-            <option value=".ai">.ai</option>
-            <option value=".io">.io</option>
-            <option value=".co">.co</option>
-            <option value=".dev">.dev</option>
-            <option value=".app">.app</option>
-            <option value=".tech">.tech</option>
-            <option value=".online">.online</option>
-            <option value=".store">.store</option>
-            <option value=".site">.site</option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="domainLength" class="form-label mb-0"
-            >Domain Length (5-20)</label
-          >
-          <input
-            type="number"
-            class="form-control"
-            id="domainLength"
-            value="10"
-            min="5"
-            max="20"
-          />
-        </div>
-        <div class="mb-3">
-          <label for="domainCount" class="form-label mb-0"
-            >Number of Domains (1-100)</label
-          >
-          <input
-            type="number"
-            class="form-control"
-            id="domainCount"
-            value="10"
-            min="1"
-            max="100"
-          />
-        </div>
+            Verify Domain Name Availability 🔎
+          </button>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div
+          class="tab-pane fade show active"
+          id="domaingen"
+          role="tabpanel"
+          aria-labelledby="domaingen-tab"
+        >
+          <h1 class="mb-4">Describe Your Desired Domain Name</h1>
+          <form id="domainForm">
+            <div class="mb-3">
+              <label for="domainDescription" class="form-label"
+                >Domain Description</label
+              >
+              <textarea
+                class="form-control"
+                id="domainDescription"
+                rows="3"
+                required
+              ></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="domainTld" class="form-label mb-0"
+                >Top-Level Domain</label
+              >
+              <select class="form-select" id="domainTld">
+                <option value=".com">.com</option>
+                <option value=".net">.net</option>
+                <option value=".org">.org</option>
+                <option value=".info">.info</option>
+                <option value=".biz">.biz</option>
+                <option value=".us">.us</option>
+                <option value=".ca">.ca</option>
+                <!-- <option value=".ai">.ai</option> -->
+                <option value=".io">.io</option>
+                <option value=".co">.co</option>
+                <option value=".dev">.dev</option>
+                <option value=".app">.app</option>
+                <option value=".tech">.tech</option>
+                <option value=".online">.online</option>
+                <option value=".store">.store</option>
+                <option value=".site">.site</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="domainLength" class="form-label mb-0"
+                >Domain Length (5-20)</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                id="domainLength"
+                value="10"
+                min="5"
+                max="20"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="domainCount" class="form-label mb-0"
+                >Number of Domains (1-100)</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                id="domainCount"
+                value="10"
+                min="1"
+                max="100"
+              />
+            </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-      <div id="spinner" class="mt-4" style="display: none">
-        <div class="spinner-border" role="status"></div>
-        <span class="sr-only">Loading...</span>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+          <div id="spinner" class="mt-4" style="display: none">
+            <div class="spinner-border" role="status"></div>
+            <span class="sr-only">Loading...</span>
+          </div>
+          <div id="responseContainer" class="mt-4"></div>
+        </div>
       </div>
-      <div id="responseContainer" class="mt-4"></div>
+      <div
+        class="tab-pane fade"
+        id="verify"
+        role="tabpanel"
+        aria-labelledby="verify-tab"
+      >
+        <h1 class="mt-4">Enter Domain Name To Verify</h1>
+        <form id="domainVerifyForm">
+          <div class="mb-3">
+            <label for="domainName" class="form-label">Domain Name</label>
+            <input type="text" class="form-control" id="domainName" required />
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <div id="verify-spinner" class="mt-4" style="display: none">
+          <div class="spinner-border" role="status"></div>
+          <span class="sr-only">Loading...</span>
+        </div>
+        <div id="verify-responseContainer" class="mt-4"></div>
+      </div>
     </div>
 
     <!-- Bootstrap JS and dependencies -->
@@ -102,6 +162,7 @@
       crossorigin="anonymous"
     ></script>
     <script>
+      // Domain Generation Form and API call
       document
         .getElementById("domainForm")
         .addEventListener("submit", function (event) {
@@ -188,6 +249,46 @@
               }
             }
           }
+        });
+      // Domain Verification Form and API call
+      document
+        .getElementById("domainVerifyForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          let responseContainer = document.getElementById(
+            "verify-responseContainer"
+          );
+          responseContainer.innerHTML = ""; // Clear previous response
+          const spinner = document.getElementById("verify-spinner");
+          spinner.style.display = "block"; // Show spinner
+          const domainName = document.getElementById("domainName").value;
+          fetch("/domainverify", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              domainName: domainName,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              let responseContainer = document.getElementById(
+                "verify-responseContainer"
+              );
+              // Display response message yellow for taken and green for available
+              responseContainer.innerHTML = `<div class="alert alert-${
+                data.data === "Available" ? "success" : "warning"
+              }">${data.message}</div>`;
+            })
+            .catch((error) => {
+              document.getElementById(
+                "verify-responseContainer"
+              ).innerHTML = `<div class="alert alert-danger">An error occurred: ${error.message}</div>`;
+            })
+            .finally(() => {
+              spinner.style.display = "none"; // Hide spinner
+            });
         });
     </script>
   </body>

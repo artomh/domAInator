@@ -21,7 +21,7 @@ app.get("/", function (req, res) {
   res.sendFile("main.html", { root: "." });
 });
 
-// Define a single POST route
+// Route to handle the domain generation request
 app.post("/domaingen", async (req, res) => {
   const description = req.body.description;
   const tld = req.body.tld;
@@ -50,6 +50,7 @@ app.post("/domaingen", async (req, res) => {
     for (const domain of result.domainNames) {
       const domainWithSuffix = domain + tld;
       const domainInfo = await whoiser(domainWithSuffix);
+      console.log(domainInfo);
       const registrarData = domainInfo[Object.keys(domainInfo)[0]];
       const domainStatus = registrarData["Domain Status"];
       if (domainStatus.length === 0) {
@@ -59,6 +60,24 @@ app.post("/domaingen", async (req, res) => {
       }
     }
     res.json({ message: "Data received", data: domainLookups });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// Route to handle the domain availability request
+app.post("/domainverify", async (req, res) => {
+  const domain = req.body.domainName;
+  try {
+    const domainInfo = await whoiser(domain);
+    const registrarData = domainInfo[Object.keys(domainInfo)[0]];
+    const domainStatus = registrarData["Domain Status"];
+    if (domainStatus.length === 0) {
+      res.json({ message: "Domain is available", data: "Available" });
+    } else {
+      res.json({ message: "Domain is taken", data: "Taken" });
+    }
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });
